@@ -18,7 +18,7 @@ public class Generate {
             Customer c1 = new Customer("Steve", "Taylor");
             Customer c2 = new Customer("Michelle", "Schmidt");
             Customer c3 = new Customer("Marc", "Johannson");
-            Customer c4 = new Customer("Jörg", "Oertel");
+            Customer c4 = new Customer("John", "Ritter");
 
             em.persist(c1);
             em.persist(c2);
