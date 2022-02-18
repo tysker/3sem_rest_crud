@@ -15,10 +15,10 @@ public class Generate {
         try{
             em.getTransaction().begin();
 
-            Customer c1 = new Customer("Steve", "Taylor");
-            Customer c2 = new Customer("Michelle", "Schmidt");
-            Customer c3 = new Customer("Marc", "Johannson");
-            Customer c4 = new Customer("John", "Ritter");
+            Customer c1 = new Customer("Steve", "Taylor", "Very low");
+            Customer c2 = new Customer("Michelle", "Schmidt", "Descent ammount of money");
+            Customer c3 = new Customer("Marc", "Johannson", "Poor guy");
+            Customer c4 = new Customer("John", "Ritter", "Very bad customer");
 
             em.persist(c1);
             em.persist(c2);

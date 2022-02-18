@@ -2,6 +2,7 @@ package dk.tysker.getrequests;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dk.tysker.getrequests.dtos.CustomerDTO;
 import dk.tysker.getrequests.entity.Customer;
 import dk.tysker.getrequests.facade.CustomerFacade;
 
@@ -20,8 +21,9 @@ public class Resource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response getCustomerById(@PathParam("id") long id) {
-        Customer c = facade.getCustomerById(id);
+        CustomerDTO c = facade.getCustomerById(id);
         return Response
                 .ok()
                 .entity(gson.toJson(c))
@@ -32,7 +34,7 @@ public class Resource {
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCustomer() {
-        List<Customer> c = facade.getAllCustomer();
+        List<CustomerDTO> c = facade.getAllCustomers();
         return Response
                 .ok()
                 .entity(gson.toJson(c))
@@ -57,7 +59,7 @@ public class Resource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteCustomerById(@PathParam("id") long id) {
-        Customer c = facade.deleteCustomerById(id);
+        CustomerDTO c = facade.deleteCustomerById(id);
         return Response.ok().entity(gson.toJson(c)).build();
     }
 
@@ -66,8 +68,8 @@ public class Resource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateCustomerByContext(String jsonContext, @PathParam("id") long id) {
-        Customer customerToBeChanged = gson.fromJson(jsonContext, Customer.class);
-        Customer updatedCustomer = facade.updateCustomer(customerToBeChanged, id);
+        CustomerDTO customerToBeChanged = gson.fromJson(jsonContext, CustomerDTO.class);
+        CustomerDTO updatedCustomer = facade.updateCustomer(customerToBeChanged, id);
         return Response.ok().entity(gson.toJson(updatedCustomer)).build();
     }
 

@@ -16,11 +16,20 @@ public class Customer {
     @Column(name = "lastname")
     private String lastName;
 
+    @Column(name = "accountinfo")
+    private String accountInfo;
+
     public Customer() {}
 
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Customer(String firstName, String lastName, String accountInfo) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.accountInfo = accountInfo;
     }
 
     public Long getId() {
@@ -41,6 +50,14 @@ public class Customer {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(String accountInfo) {
+        this.accountInfo = accountInfo;
     }
 
     public void setLastName(String lastName) {

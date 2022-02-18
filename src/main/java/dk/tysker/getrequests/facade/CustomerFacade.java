@@ -1,5 +1,6 @@
 package dk.tysker.getrequests.facade;
 
+import dk.tysker.getrequests.dtos.CustomerDTO;
 import dk.tysker.getrequests.entity.Customer;
 
 import javax.persistence.EntityManager;
@@ -12,24 +13,24 @@ public class CustomerFacade {
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
 
-    public Customer getCustomerById(long id) {
+    public CustomerDTO getCustomerById(long id) {
         EntityManager em = emf.createEntityManager();
-        return em.find(Customer.class, id);
+        return new CustomerDTO(em.find(Customer.class, id));
     }
 
-    public long addCustomer(Customer customer) {
+    public long addCustomer(Customer customerDTO) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(customer);
+            em.persist(customerDTO);
             em.getTransaction().commit();
-            return customer.getId();
+            return customerDTO.getId();
         } finally {
             em.close();
         }
     }
 
-    public Customer deleteCustomerById(long customerId) {
+    public CustomerDTO deleteCustomerById(long customerId) {
         EntityManager em = emf.createEntityManager();
         try {
             Customer c = em.find(Customer.class, customerId);
@@ -41,7 +42,7 @@ public class CustomerFacade {
             } else {
                 return null;
             }
-            return c;
+            return new CustomerDTO(c);
         } finally {
             em.close();
             emf.close();
@@ -49,27 +50,27 @@ public class CustomerFacade {
 
     }
 
-    public Customer updateCustomer(Customer customer, long customerId) {
+    public CustomerDTO updateCustomer(CustomerDTO customer, long customerId) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
 
             Customer c = em.find(Customer.class, customerId);
-            c.setFirstName(customer.getFirstName());
-            c.setLastName(customer.getLastName());
+            c.setFirstName(customer.getFirst());
+            c.setLastName(customer.getLast());
             em.getTransaction().commit();
-            return c;
+            return new CustomerDTO(c);
         } finally {
             em.close();
             emf.close();
         }
     }
 
-    public List<Customer> getAllCustomer() {
+    public List<CustomerDTO> getAllCustomers() {
         EntityManager em = emf.createEntityManager();
         try{
             TypedQuery query = em.createQuery("select c from Customer c", Customer.class);
-            return query.getResultList();
+            return CustomerDTO.getDTOs(query.getResultList());
         } finally {
             em.close();
             emf.close();
