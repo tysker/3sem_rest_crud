@@ -6,6 +6,7 @@
     <persistence-unit name="pu">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>dk.tysker.getrequests.entity.Customer</class>
+        <class>dk.tysker.getrequests.entity.Employee</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/startcode_test"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

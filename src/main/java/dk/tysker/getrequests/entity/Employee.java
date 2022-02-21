@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "customer")
-public class Customer {
+@Table(name = "employee")
+public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -18,28 +18,23 @@ public class Customer {
     @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "accountinfo")
-    private String accountInfo;
+    @Column(name = "phone")
+    private String phone;
 
-    @ManyToMany
-    @JoinTable( // This is now the owner side of the relationsship
-            name = "customer_employee",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id"))
-    private Set<Employee> employees = new HashSet<>();
+    @ManyToMany (mappedBy = "employees")
+    private Set<Customer> customers = new HashSet<>();
 
-    public Customer() {
-    }
+    public Employee() {}
 
-    public Customer(String firstName, String lastName) {
+    public Employee(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Customer(String firstName, String lastName, String accountInfo) {
+    public Employee(String firstName, String lastName, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.accountInfo = accountInfo;
+        this.phone = phone;
     }
 
     public Long getId() {
@@ -62,21 +57,20 @@ public class Customer {
         return lastName;
     }
 
-    public String getAccountInfo() {
-        return accountInfo;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAccountInfo(String accountInfo) {
-        this.accountInfo = accountInfo;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Set<Employee> getEmployees() {
-        return employees;
+    public Set<Customer> getCustomers() {
+        return customers;
     }
 
-    public void addEmployee(Employee employee) {
-        this.employees.add(employee);
-        employee.addCustomer(this);
+    public void addCustomer(Customer customer) {
+        this.customers.add(customer);
     }
 
     public void setLastName(String lastName) {

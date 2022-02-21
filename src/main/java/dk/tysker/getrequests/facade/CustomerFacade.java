@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CustomerFacade {
 
@@ -75,5 +77,23 @@ public class CustomerFacade {
             em.close();
             emf.close();
         }
+    }
+    public Set<Customer> getAllCustomersByEmp(Long emp_id) {
+        EntityManager em = emf.createEntityManager();
+        try{
+            TypedQuery query = em.createQuery("select c from Customer c JOIN c.employees e WHERE e.id = :id ", Customer.class);
+            query.setParameter("id", emp_id);
+            return new HashSet(CustomerDTO.getDTOs(query.getResultList()));
+        } finally {
+            em.close();
+            emf.close();
+        }
+    }
+
+    public static void main(String[] args) {
+        CustomerFacade cf = new CustomerFacade();
+
+        Set<Customer> customers = cf.getAllCustomersByEmp(1L);
+        System.out.println(customers);
     }
 }

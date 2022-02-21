@@ -16,12 +16,12 @@ DELETE http://localhost:8080/getRequests_war_exploded/api/customer/1
 
 ###
 
-PUT http://localhost:8080/getRequests_war_exploded/api/customer/11
+PUT http://localhost:8080/getRequests_war_exploded/api/customer/2
 Content-Type: application/json
 
 {
-  "firstName": "Jens",
-  "lastName": "Johannson"
+  "first": "Jens",
+  "last": "Johannson"
 }
 
 ###
